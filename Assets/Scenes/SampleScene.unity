@@ -730,11 +730,11 @@ GameObject:
   - component: {fileID: 1801724895}
   - component: {fileID: 1801724894}
   - component: {fileID: 1801724893}
-  - component: {fileID: 1801724892}
   - component: {fileID: 1801724896}
   - component: {fileID: 1801724897}
   - component: {fileID: 1801724898}
   - component: {fileID: 1801724899}
+  - component: {fileID: 1801724900}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -742,27 +742,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &1801724892
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1801724891}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1801724893
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -880,7 +859,8 @@ MonoBehaviour:
   - {x: -12.31, y: -110.4105}
   _directionMove: {x: 0, y: 0, z: 1}
   _speed: 5
-  _jumpForce: 2
+  _jumpForce: 300
+  _crouchTime: 1
 --- !u!114 &1801724898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -925,6 +905,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ITMoscowRun.Scripts.Player.SwipeDetector
   minDistance: 50
   maxTime: 1
+--- !u!136 &1801724900
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801724891}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2129771081
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,16 +11,22 @@ namespace ITMoscowRun.Scripts.Player
         [SerializeField] private Vector3 _directionMove = Vector3.forward;
         [SerializeField] private float _speed = 5;
         [SerializeField] private float _jumpForce = 50;
+        [SerializeField] private float _crouchTime = 1;
 
+        private Vector3 startSize;
+        private Vector3 crouchSize;
         private bool isGround = true;
         private bool ifAlive = true;
         private Rigidbody rb;
         private Coroutine jumpToLines;
+        private Coroutine crouch;
         private enum Lines { Left = 0, Middle = 1, Right = 2 };
         private Lines currentLine = Lines.Middle;
 
         private void Start()
         {
+            startSize = transform.localScale;
+            crouchSize = new Vector3(startSize.x, startSize.y / 2f, startSize.z);
              rb = GetComponent<Rigidbody>();
         }
 
@@ -77,13 +83,29 @@ namespace ITMoscowRun.Scripts.Player
             {
                 TryJump();
             }
+            else if (input.y < 0)
+            {
+                TryCrouch();
+            }
         }
 
         private void TryJump()
         {
             if (!isGround) return;
 
+            transform.localScale = startSize;
             rb.AddForce(Vector3.up * _jumpForce);
+        }
+
+        private void TryCrouch()
+        {
+            if (crouch != null)
+            {
+                StopCoroutine(crouch);
+                crouch = null;
+            }
+
+            crouch = StartCoroutine(PlayerCrouch());
         }
 
         private void SwitchLine()
@@ -94,6 +116,17 @@ namespace ITMoscowRun.Scripts.Player
             }
 
             jumpToLines = StartCoroutine(JumpToLine());
+        }
+
+        private IEnumerator PlayerCrouch()
+        {
+            transform.localScale = crouchSize;
+            rb.AddForce(Vector3.down * _jumpForce);
+
+            yield return new WaitForSeconds(_crouchTime);
+
+            transform.localScale = startSize;
+            crouch = null;
         }
 
         private IEnumerator JumpToLine()
@@ -116,7 +149,6 @@ namespace ITMoscowRun.Scripts.Player
         private void OnCollisionStay(Collision other)
         {
             isGround = true;
-            print(isGround);
         }
 
         private void OnCollisionExit(Collision other)
