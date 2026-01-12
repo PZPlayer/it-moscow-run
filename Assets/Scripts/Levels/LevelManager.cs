@@ -1,7 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 namespace ITMoscowRun.Scripts.Levels
 {
@@ -15,10 +16,12 @@ namespace ITMoscowRun.Scripts.Levels
     {
         [SerializeField] private List<Bioms> _bioms;
         [SerializeField] private List<Level> _spawnedLevels;
+        [SerializeField] private Level _victoryLevel;
+        [SerializeField] private int _maxLevels = 80;
         [SerializeField] private int _levelsAhead = 5;
-        [SerializeField] private int _levelsSeeDistance = 3;
 
         private int currentLevel = 1;
+        private bool isVictoryleveSpawned = false;
 
         private void Start()
         {
@@ -30,9 +33,19 @@ namespace ITMoscowRun.Scripts.Levels
 
         private IEnumerator SpawnLevels(int spawnUntil)
         {
+            if (isVictoryleveSpawned) yield break; 
+
             while (_spawnedLevels.Count < spawnUntil)
             {
                 int chooseBiom = UnityEngine.Random.Range(0, Mathf.Max(_bioms.Count, 0));
+
+                if (_spawnedLevels.Count >= _maxLevels)
+                {
+                    print("VictorySpawned! " + _spawnedLevels.Count);
+                    isVictoryleveSpawned = true;
+                    _spawnedLevels.Add(Instantiate(_victoryLevel, _spawnedLevels[_spawnedLevels.Count - 1].EndPoint.position, Quaternion.identity).GetComponent<Level>());
+                    yield break;
+                }
                 
                 foreach (GameObject level in _bioms[chooseBiom].levels)
                 {

@@ -39,16 +39,13 @@ namespace ITMoscowRun.Scripts.Player
 
         private void DetectSwipe(Vector2 start, Vector2 end, float sTime, float eTime)
         {
-            print("df" + Vector3.Distance(start, end) + "    " + (eTime - sTime) + "     " + maxTime + "    " + eTime + "    " + sTime);
             if (Vector3.Distance(start, end) > minDistance && (eTime - sTime) <= maxTime)
             {
                 Vector2 direction = (end - start).normalized;
-                print("df2");
                 if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
                 {
                     if (direction.x > 0)
                     {
-                        print("right");
                         movement.CheckLines(Vector2.right);
                     }
                     else
