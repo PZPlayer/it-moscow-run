@@ -8,12 +8,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - NPC
   - Water
   - UI
   - Obstacle
   - Victory
-  - 
+  - Player
   - 
   - 
   - 
